@@ -1,0 +1,157 @@
+/* Grundstyling */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Courier New', Courier, monospace; /* Ersetze dies durch deine Figma-Schriftart */
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Hintergrund-Verlauf aus deinem Figma (Lila zu Schwarz) */
+    background: radial-gradient(circle at bottom left, #7b2cbf 0%, #10002b 70%);
+    background-size: cover;
+    color: #fff;
+    overflow: hidden;
+}
+
+/* Haupt-Layout */
+.oracle-container {
+    display: flex;
+    width: 90%;
+    max-width: 1200px;
+    justify-content: space-around;
+    align-items: center;
+    gap: 50px;
+}
+
+/* Interface (Rechte Seite) */
+.interface-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #c77dff;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+}
+
+input {
+    width: 350px;
+    height: 60px;
+    background-color: #c8b6ff;
+    border: none;
+    border-radius: 12px;
+    padding: 15px;
+    font-size: 1rem;
+    color: #240046;
+    outline: none;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+button {
+    margin-top: 30px;
+    width: 150px;
+    padding: 12px 0;
+    background-color: #b5a2e6;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    color: #240046;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+button:hover {
+    background-color: #9d4edd;
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Karten-Bereich (Linke Seite) */
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 Spalten, damit die 3. Karte unten landet */
+    gap: 20px;
+    justify-items: center;
+    transition: all 0.5s ease;
+}
+
+/* Die 3. Karte soll zentriert in der zweiten Reihe sein */
+.card-wrapper:nth-child(3) {
+    grid-column: span 2;
+}
+
+.hidden {
+    opacity: 0;
+    transform: translateX(-50px);
+    pointer-events: none;
+}
+
+/* --- 3D KARTEN FLIP EFFEKT --- */
+.card-wrapper {
+    width: 160px;
+    height: 260px;
+    perspective: 1000px; /* Wichtig für den 3D-Effekt */
+}
+
+.card-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+
+/* Hover-Effekt: Karte dreht sich um */
+.card-wrapper:hover .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden; /* Versteckt die Rückseite während der Drehung */
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    overflow: hidden;
+}
+
+/* Vorderseite (Das eigentliche Tarot-Bild) */
+.card-front img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Rückseite (Bedeutungstext) */
+.card-back {
+    background: #240046;
+    border: 2px solid #c77dff;
+    color: #e0aaff;
+    transform: rotateY(180deg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    text-align: center;
+    font-size: 0.8rem;
+}
+
+.card-back h3 {
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    color: #fff;
+}

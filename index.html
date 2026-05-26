@@ -3,23 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tarot Card Reading</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Ask the Oracle</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>Vorlage für interaktive Medien II</h1>
 
-    </header>
-    <main>
-        <h2>HALLO</h2>
-        <p>This is the main content of the page.</p>
+    <div class="oracle-container">
+        
+        <div id="cards-container" class="cards-container hidden">
+            </div>
 
-    </main>
-    <footer>
-        <p>This is the footer of the page.</p>
+        <div class="interface-container">
+            <h1>ASK THE ORACLE</h1>
+            
+            <div class="input-group">
+                <input type="text" id="oracle-input" placeholder="Stelle deine Frage an das Schicksal...">
+            </div>
 
-    </footer>
-    <script src="js/script.js" type="module"></script>
+            <button id="oracle-btn">ASK</button>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
