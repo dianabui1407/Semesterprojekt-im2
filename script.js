@@ -8,9 +8,14 @@ let isShowingResult = false;
 oracleBtn.addEventListener('click', async () => {
     // Validierung: Wurde etwas eingegeben?
     if (!oracleInput.value.trim() && !isShowingResult) {
-        alert('Bitte stelle zuerst eine Frage an das Orakel!');
+        alert('Please ask the oracle a question first!');
         return;
     }
+    // Prüfen ob Fragezeichen vorhanden
+if (!oracleInput.value.includes('?') && !isShowingResult) {
+    alert('Please ask a question that ends with a question mark.');
+    return;
+}
 
     if (!isShowingResult) {
         // --- ZUSTAND: ASK GEKLICKT ---
@@ -18,44 +23,44 @@ oracleBtn.addEventListener('click', async () => {
         oracleBtn.disabled = true;
 
         try {
-            // 3 zufällige Karten von der API abrufen
-            const response = await fetch('https://tarotapi.dev/api/v1/cards/random?n=3');
-            
-            // HIER WAR DER FEHLER: .json() statt .getJson()
-            const data = await response.json(); 
-            
-            // Container leeren
-            cardsContainer.innerHTML = '';
-            
-            data.cards.forEach(card => {
-                const cardWrapper = document.createElement('div');
-                cardWrapper.classList.add('card-wrapper');
+    // 3 zufällige Karten von der API abrufen
+    const response = await fetch('https://tarotapi.dev/api/v1/cards/random?n=3');
+    const data = await response.json(); 
+    
+    // Container leeren
+    cardsContainer.innerHTML = '';
+    
+    data.cards.forEach(card => {
+        const cardWrapper = document.createElement('div');
+        cardWrapper.classList.add('card-wrapper');
 
-                // Zuverlässige Bild-Quelle für die Rider-Waite Karten (Nutzt den Kurznamen der Karte)
-                const imageUrl = `https://raw.githubusercontent.com/wfa/tarot-api/master/static/cards/${card.name_short}.jpg`;
+        // HIER ERFOLGT DIE MAGIE: 
+        // Wir bauen den Pfad dynamisch anhand des API-Kurznamens zusammen.
+        // Wenn die API "ar16" liefert, wird daraus "images/ar16.jpg"
+        const imageUrl = `img/${card.name_short}.png`; 
 
-                cardWrapper.innerHTML = `
-                    <div class="card-inner">
-                        <div class="card-front">
-                            <img src="${imageUrl}" alt="${card.name}">
-                        </div>
-                        <div class="card-back">
-                            <h3>${card.name}</h3>
-                            <p><strong>Meaning:</strong> ${card.meaning_up.substring(0, 120)}...</p>
-                        </div>
-                    </div>
-                `;
-                cardsContainer.appendChild(cardWrapper);
-            });
+        cardWrapper.innerHTML = `
+            <div class="card-inner">
+                <div class="card-front">
+                    <img src="${imageUrl}" alt="${card.name}">
+                </div>
+                <div class="card-back">
+                    <h3>${card.name}</h3>
+                    <p><strong>Meaning:</strong> ${card.meaning_up.substring(0, 120)}...</p>
+                </div>
+            </div>
+        `;
+        cardsContainer.appendChild(cardWrapper);
+    });
 
-            // UI umschalten auf "Desktop 2"
-            cardsContainer.classList.remove('hidden');
-            oracleBtn.innerText = 'REDO';
-            isShowingResult = true;
+    // UI umschalten auf "Desktop 2"
+    cardsContainer.classList.remove('hidden');
+    oracleBtn.innerText = 'REDO';
+    isShowingResult = true;
 
         } catch (error) {
-            console.error('Fehler beim Laden der Tarot-Karten:', error);
-            alert('Das Orakel ist gerade überlastet. Versuche es gleich noch einmal.');
+            console.error('Error loading the tarot cards:', error);
+            alert('The oracle is currently unavailable. Please try again in a moment.');
             oracleBtn.innerText = 'ASK';
         } finally {
             oracleBtn.disabled = false;

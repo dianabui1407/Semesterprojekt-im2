@@ -1,3 +1,4 @@
+@import "font.css";
 /* Grundstyling */
 * {
     box-sizing: border-box;
@@ -41,6 +42,12 @@ h1 {
     color: #c77dff;
     margin-bottom: 20px;
     letter-spacing: 2px;
+
+    font-family: 'crushed';
+}
+
+h3 {
+    font-family: 'crushed';
 }
 
 input {
@@ -69,6 +76,8 @@ button {
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+
+    font-family: 'crushed';
 }
 
 button:hover {
@@ -151,7 +160,93 @@ button:hover {
 }
 
 .card-back h3 {
-    font-size: 0.9rem;
+    font-size: 1rem;
     margin-bottom: 5px;
     color: #fff;
+}
+
+/* =========================
+   MOBILE VERSION
+========================= */
+
+@media (max-width: 768px) {
+
+    body {
+        height: auto;
+        min-height: 100vh;
+        overflow-y: auto;
+        padding: 40px 0;
+    }
+
+    /* Hauptlayout */
+
+    .oracle-container {
+        flex-direction: column-reverse;
+        justify-content: flex-start;
+        align-items: center;
+        width: 100%;
+        gap: 40px;
+        padding: 20px;
+    }
+
+    /* Interface */
+
+    .interface-container {
+        width: 100%;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    input {
+        width: 90%;
+        max-width: 300px;
+        height: 50px;
+        font-size: 0.9rem;
+    }
+
+    button {
+        width: 120px;
+        font-size: 1rem;
+        margin-top: 20px;
+    }
+
+    /* Karten */
+
+    .cards-container {
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 25px;
+        width: 100%;
+    }
+
+    .card-wrapper {
+
+        width: 140px;
+        height: 230px;
+
+        flex-shrink: 0;
+    }
+
+    /* Reset vom Desktop Grid */
+
+    .card-wrapper:nth-child(3) {
+        grid-column: auto;
+    }
+
+    /* Kartenrückseite */
+
+    .card-back {
+        font-size: 0.7rem;
+        padding: 8px;
+    }
+
+    .card-back h3 {
+        font-size: 0.8rem;
+    }
 }
