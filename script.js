@@ -14,7 +14,7 @@ oracleBtn.addEventListener('click', async () => {
 
     if (!isShowingResult) {
         // --- ZUSTAND: ASK GEKLICKT ---
-        oracleBtn.innerText = 'Lade...';
+        oracleBtn.innerText = 'Loading...';
         oracleBtn.disabled = true;
 
         try {
