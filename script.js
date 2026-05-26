@@ -41,7 +41,7 @@ oracleBtn.addEventListener('click', async () => {
                         </div>
                         <div class="card-back">
                             <h3>${card.name}</h3>
-                            <p><strong>Bedeutung:</strong> ${card.meaning_up.substring(0, 120)}...</p>
+                            <p><strong>Meaning:</strong> ${card.meaning_up.substring(0, 120)}...</p>
                         </div>
                     </div>
                 `;
