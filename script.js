@@ -2,61 +2,64 @@ const oracleBtn = document.getElementById('oracle-btn');
 const oracleInput = document.getElementById('oracle-input');
 const cardsContainer = document.getElementById('cards-container');
 
-// Zustand der App (ob wir gerade das Ergebnis sehen oder nicht)
 let isShowingResult = false;
+const lottieUrl = "https://lottie.host/172d858f-c3d6-4dd5-9fcb-57fa8d239f23/k5ChEbbK4Y.json";
 
 oracleBtn.addEventListener('click', async () => {
-    // Validierung: Wurde etwas eingegeben?
     if (!oracleInput.value.trim() && !isShowingResult) {
         alert('Please ask the oracle a question first!');
         return;
     }
-    // Prüfen ob Fragezeichen vorhanden
-if (!oracleInput.value.includes('?') && !isShowingResult) {
-    alert('Please ask a question that ends with a question mark.');
-    return;
-}
+    if (!oracleInput.value.includes('?') && !isShowingResult) {
+        alert('Please ask a question that ends with a question mark.');
+        return;
+    }
 
     if (!isShowingResult) {
-        // --- ZUSTAND: ASK GEKLICKT ---
         oracleBtn.innerText = 'Loading...';
         oracleBtn.disabled = true;
 
         try {
-    // 3 zufällige Karten von der API abrufen
-    const response = await fetch('https://tarotapi.dev/api/v1/cards/random?n=3');
-    const data = await response.json(); 
-    
-    // Container leeren
-    cardsContainer.innerHTML = '';
-    
-    data.cards.forEach(card => {
-        const cardWrapper = document.createElement('div');
-        cardWrapper.classList.add('card-wrapper');
+            const response = await fetch('https://tarotapi.dev/api/v1/cards/random?n=3');
+            const data = await response.json();
 
-        // HIER ERFOLGT DIE MAGIE: 
-        // Wir bauen den Pfad dynamisch anhand des API-Kurznamens zusammen.
-        // Wenn die API "ar16" liefert, wird daraus "images/ar16.jpg"
-        const imageUrl = `img/${card.name_short}.png`; 
+            cardsContainer.innerHTML = '';
 
-        cardWrapper.innerHTML = `
-            <div class="card-inner">
-                <div class="card-front">
-                    <img src="${imageUrl}" alt="${card.name}">
-                </div>
-                <div class="card-back">
-                    <h3>${card.name}</h3>
-                    <p><strong>Meaning:</strong> ${card.meaning_up.substring(0, 120)}...</p>
-                </div>
-            </div>
-        `;
-        cardsContainer.appendChild(cardWrapper);
-    });
+            data.cards.forEach((card, index) => {
+                const cardWrapper = document.createElement('div');
+                cardWrapper.classList.add('card-wrapper');
 
-    // UI umschalten auf "Desktop 2"
-    cardsContainer.classList.remove('hidden');
-    oracleBtn.innerText = 'REDO';
-    isShowingResult = true;
+                const imageUrl = `img/${card.name_short}.png`;
+                
+                cardWrapper.innerHTML = `
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <img src="${imageUrl}" alt="${card.name}">
+                        </div>
+                        <div class="card-back">
+                            <h3>${card.name}</h3>
+                            <p><strong>Meaning:</strong> ${card.meaning_up.substring(0, 120)}...</p>
+                        </div>
+                    </div>
+                `;
+
+                const lottiePlayer = document.createElement('lottie-player');
+                lottiePlayer.setAttribute('src', lottieUrl);
+                lottiePlayer.setAttribute('background', 'transparent');
+                lottiePlayer.setAttribute('speed', '1');
+                lottiePlayer.setAttribute('loop', '');
+                lottiePlayer.setAttribute('autoplay', '');
+                
+                lottiePlayer.classList.add('lottie-effect', `lottie-effect-${index + 1}`);
+
+                cardWrapper.appendChild(lottiePlayer);
+                
+                cardsContainer.appendChild(cardWrapper);
+            });
+
+            cardsContainer.classList.remove('hidden');
+            oracleBtn.innerText = 'REDO';
+            isShowingResult = true;
 
         } catch (error) {
             console.error('Error loading the tarot cards:', error);
@@ -65,11 +68,9 @@ if (!oracleInput.value.includes('?') && !isShowingResult) {
         } finally {
             oracleBtn.disabled = false;
         }
-
     } else {
-        // --- ZUSTAND: REDO GEKLICKT (Zurücksetzen auf Desktop 1) ---
         cardsContainer.classList.add('hidden');
-        oracleInput.value = ''; // Input leeren
+        oracleInput.value = '';
         oracleBtn.innerText = 'ASK';
         isShowingResult = false;
     }
