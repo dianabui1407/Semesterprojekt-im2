@@ -3,6 +3,7 @@ Wir haben uns für eine API entschieden, welche die Bedeutung von Tarotkarten ze
 
 # Herausforderungen
 Eine Animation mit Lotti-Files zu erstellen war aufwendiger als gedacht. Zuerst wollten wir einen kleinen Zauberer animieren, der auftaucht, sobald man eine Frage stellt. Da das für uns sehr schwer umzusetzen war, ohne bereits bestehende Animationen zu verwenden, haben wir uns entschieden, eine einfachere Lösung zu suchen. Schlussendlich haben wir einen «Glitzereffekt» animiert, der sich um die Karten herumbewegt.
+
 Zudem ist uns beim Programmieren aufgefallen, dass unsere API keine Bilder verwendet, was für unsere Idee unvorteilhaft war. Deshalb mussten wir die Bilder von Hand einfügen und mit den Bedeutungen aus der API verbinden, so dass das jeweilige Bild immer mit der richtigen Bedeutung angezeigt wird. Das haben wir gelöst, indem wir die API in den Dev-Tools untersucht haben, um herauszufinden, wie die jeweiligen Karten benennt sind. Dann mussten wir alle PNGs in unserem img-Ordner genau so benennen und das Problem war gelöst. 
 
 # Vorgehen
